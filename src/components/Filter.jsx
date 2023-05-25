@@ -11,18 +11,13 @@ export const FilterMenu = () => {
     const selection = event.target.value;
     setSelectedGender(selection);
 
-    if (selection === "Male") {
+    if (selection === "male" || selection === "female") {
       fetchContacts()
       .then(response => {
-        const maleContacts = response.data.results;
-        setFilteredContacts(maleContacts);
-      })
-    } else if (selection === "Female") {
-      fetchContacts()
-      .then(response => {
-        const femaleContacts = response.data.results;
-        setFilteredContacts(femaleContacts);
-    });
+        const contacts = response.data.results;
+        const filteredContacts = contacts.filter(contact => contact.gender === selection);
+        setFilteredContacts(filteredContacts);
+      });
    }
   }
 
@@ -30,8 +25,8 @@ return (
     <div>
         <select value={selectedGender} onChange={handleGenderChange}>
            <option>Select a gender</option>
-           <option value="Male">Male</option>
-           <option value="Female">Female</option>
+           <option value="male">Male</option>
+           <option value="female">Female</option>
         </select>
         <div>
         <CustomCard contacts={filteredContacts}/>
