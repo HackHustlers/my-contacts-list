@@ -1,6 +1,6 @@
-import { fetchContacts } from "../helpers/axiosHelper";
-import { useState } from "react"
 // import { fetchContacts } from "../helpers/axiosHelper";
+import { useState } from "react"
+import { Contacts } from "./Contacts";
 import { CustomCard } from "./CustomCard";
 
 export const FilterMenu = () => {
@@ -10,16 +10,26 @@ export const FilterMenu = () => {
   const handleGenderChange = (event) => {
     const selection = event.target.value;
     setSelectedGender(selection);
-
+    
     if (selection === "male" || selection === "female") {
-      fetchContacts()
-      .then(response => {
-        const contacts = response.data.results;
-        const filteredContacts = contacts.filter(contact => contact.gender === selection);
-        setFilteredContacts(filteredContacts);
-      });
+        Contacts()
+        .then(response => {
+            const contacts = response.data.results;
+            const filteredContacts = contacts.filter(contact = contact.gender === selection);
+            setFilteredContacts(filteredContacts);
+        });
+    }
    }
-  }
+
+//     if (selection === "male" || selection === "female") {
+//       fetchContacts()
+//       .then(response => {
+//         const contacts = response.data.results;
+//         const filteredContacts = contacts.filter(contact => contact.gender === selection);
+//         setFilteredContacts(filteredContacts);
+//       });
+//    }
+//   }
 
 return (
     <div>
