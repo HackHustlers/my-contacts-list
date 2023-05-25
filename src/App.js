@@ -1,11 +1,26 @@
+import { useEffect, useState } from "react";
 import "./App.css";
-import Filter from "./Filter";
+import { CustomCard } from "./components/CustomCard";
+import { fetchContacts } from "./helpers/axiosHelper";
 
 function App() {
-  // return <div className="App">Hello World!</div>;
+  const [contacts, setContacts] = useState([]);
+
+  useEffect(() => {
+    fetchedContacts();
+  }, []);
+
+  const fetchedContacts = async () => {
+    const { data } = await fetchContacts();
+    setContacts(data.results);
+  };
   return (
-  <Filter />
-  )
+    <div className="wrapper">
+      <div className="container">
+        <CustomCard contacts={contacts} />
+      </div>
+    </div>
+  );
 }
 
 export default App;
