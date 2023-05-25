@@ -6,3 +6,4 @@ export const fetchContacts = () => {
   const response = axios.get(apiUrl);
   return response;
 };
+

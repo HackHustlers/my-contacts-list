@@ -1,25 +1,42 @@
-import { useEffect, useState } from "react";
+import { fetchContacts } from "../helpers/axiosHelper";
+import { useState } from "react"
+// import { fetchContacts } from "../helpers/axiosHelper";
+import { CustomCard } from "./CustomCard";
 
-export default function Filter() {
+export const FilterMenu = () => {
+  const [selectedGender, setSelectedGender] = useState("");
+  const [filteredContacts, setFilteredContacts] = useState([]);
 
-    const [contact, setContact] = useState(null);
+  const handleGenderChange = (event) => {
+    const selection = event.target.value;
+    setSelectedGender(selection);
 
-    useEffect(() => {
-        fetch("https://randomuser.me/api/?gender=female")
-        .then(response => response.json())
-        .then(data => {
-            setContact(data.gender)
-        })
-    },[]);
+    if (selection === "Male") {
+      fetchContacts()
+      .then(response => {
+        const maleContacts = response.data.results;
+        setFilteredContacts(maleContacts);
+      })
+    } else if (selection === "Female") {
+      fetchContacts()
+      .then(response => {
+        const femaleContacts = response.data.results;
+        setFilteredContacts(femaleContacts);
+    });
+   }
+  }
 
-    useEffect(() => {
-        console.log("Gender is " + contact)
-    })
-
-
-    return (
+return (
+    <div>
+        <select value={selectedGender} onChange={handleGenderChange}>
+           <option>Select a gender</option>
+           <option value="Male">Male</option>
+           <option value="Female">Female</option>
+        </select>
         <div>
-            <h1>{contact}</h1>
+        <CustomCard contacts={filteredContacts}/>
         </div>
-    );
+    </div>
+)
+
 }
