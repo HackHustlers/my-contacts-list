@@ -6,12 +6,12 @@ export const SearchBar = ({setResults}) => {
   const fetchData = (value) => {
     fetch("https://randomuser.me/api/?results=20")
     .then((response) => response.json())
-    .then((json) => {
-      const results = json.filter((user) => {
-        return value &&
-        user &&
-        user.name &&
-        user.name.toLowerCase().includes(value)
+    .then((data) => {
+      const results = data.results.filter((result) => {
+        const lowerCaseValue = value.toLowerCase();
+        const isFirstNameMatch = result.name.first.toLowerCase().includes(lowerCaseValue)
+        const isLastNameMatch = result.name.last.toLowerCase().includes(lowerCaseValue)
+        return isFirstNameMatch || isLastNameMatch;
       });
       setResults(results)
     });
@@ -21,7 +21,6 @@ export const SearchBar = ({setResults}) => {
     setInput(value)
     fetchData(value)
   }
-
 
   return (
     <div className="input-wrapper">

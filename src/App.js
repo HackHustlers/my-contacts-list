@@ -16,15 +16,10 @@ function App() {
     setContacts(data.results);
   };
 
-  const [setResults] = useState([]);
-
-
-
-
   return (
     <div className="wrapper">
       <div className="container">
-        <SearchBar setResults={setResults} />
+        <SearchBar setResults={setContacts} />
         <CustomCard contacts={contacts} />
       </div>
     </div>
