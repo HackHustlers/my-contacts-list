@@ -5,7 +5,8 @@ import { fetchContacts } from "./helpers/axiosHelper";
 import { SearchBar } from "./components/contacts/SearchBar";
 
 function App() {
-  const [contacts, setContacts] = useState([]);
+  const [allContacts, setAllContacts] = useState([]);
+  const [filteredContacts, setFilteredContacts] = useState([]);
 
   useEffect(() => {
     fetchedContacts();
@@ -13,14 +14,15 @@ function App() {
 
   const fetchedContacts = async () => {
     const { data } = await fetchContacts();
-    setContacts(data.results);
+    setAllContacts(data.results);
+    setFilteredContacts(data.results);
   };
 
   return (
     <div className="wrapper">
       <div className="container">
-        <SearchBar setResults={setContacts} />
-        <CustomCard contacts={contacts} />
+        <SearchBar allContacts={allContacts} setFilteredContacts={setFilteredContacts} />
+        <CustomCard contacts={filteredContacts} />
       </div>
     </div>
   );

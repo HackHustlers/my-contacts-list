@@ -1,25 +1,21 @@
 import React, {useState} from 'react';
 import "./SearchBar.css";
 
-export const SearchBar = ({setResults}) => {
+export const SearchBar = ({ allContacts, setFilteredContacts }) => {
   const [input, setInput] = useState("")
-  const fetchData = (value) => {
-    fetch("https://randomuser.me/api/?results=20")
-    .then((response) => response.json())
-    .then((data) => {
-      const results = data.results.filter((result) => {
-        const lowerCaseValue = value.toLowerCase();
-        const isFirstNameMatch = result.name.first.toLowerCase().includes(lowerCaseValue)
-        const isLastNameMatch = result.name.last.toLowerCase().includes(lowerCaseValue)
-        return isFirstNameMatch || isLastNameMatch;
-      });
-      setResults(results)
+  const filterContacts = (value) => {
+    const results = allContacts.filter((result) => {
+      const lowerCaseValue = value.toLowerCase();
+      const isFirstNameMatch = result.name.first.toLowerCase().includes(lowerCaseValue)
+      const isLastNameMatch = result.name.last.toLowerCase().includes(lowerCaseValue)
+      return isFirstNameMatch || isLastNameMatch;
     });
+    setFilteredContacts(results)
   }
 
   const handleChange = (value) => {
     setInput(value)
-    fetchData(value)
+    filterContacts(value)
   }
 
   return (
