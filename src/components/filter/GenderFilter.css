@@ -1,0 +1,10 @@
+.gender-filter {
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-left: 5px;
+}
